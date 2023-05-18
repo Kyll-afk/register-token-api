@@ -20,7 +20,14 @@ const insertUser = (req: Request, res: Response) => {
 		serverError(res, err)
 	})
 }
-
+const showUser = (req: Request, res: Response) => {
+	userModel.showUsers().then(users => {
+		res.json(users)
+	}).catch(err => {
+		serverError(res, err)
+	})
+}
 export const userController = {
-	insertUser
+	insertUser,
+	showUser
 }
