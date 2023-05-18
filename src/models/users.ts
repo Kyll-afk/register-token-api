@@ -15,7 +15,12 @@ export type User = {
 const insertUser = async (user: User) => {
 	await dbQuery('INSERT INTO user (email, password) VALUES(?, ?)', [user.email, user.password])
 	let returned = await dbQuery(`SELECT seq AS Id FROM sqlite_sequence WHERE name = 'user'`);
-	return returned[0].Id as number || undefined;
+	return getUser(returned[0].Id);
+}
+
+const updateUser = async (user: User) => {
+	await dbQuery(`UPDATE user SET email = ?, password = ? WHERE id = ?`, [user.email, user.password, user.id])
+	return getUser(user.id)
 }
 
 const showUsers = async () => {
@@ -36,5 +41,6 @@ export const userModel = {
 	insertUser,
 	showUsers,
 	getUser,
-	deleteUser
+	deleteUser,
+	updateUser
 }
