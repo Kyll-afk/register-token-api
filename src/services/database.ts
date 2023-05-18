@@ -9,6 +9,11 @@ export const connect = () => {
 	return db;
 }
 
+export const dbQueryFirst = async (query: string, params?: any[]) => {
+	const returned = await dbQuery(query, params);
+	return returned[0];
+}
+
 export const dbQuery = (query: string, params?: any[]) => {
 	let db = connect();
 	return new Promise<any[]>((resolve, reject) => {

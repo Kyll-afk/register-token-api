@@ -10,3 +10,9 @@ export const serverError = (res: Response, err: Error) => {
 		err: err.message
 	})
 }
+
+export const validateNumber = (num: any): boolean => (parseInt(num) > 0)
+
+export const notFound = (res: Response) => {
+	res.sendStatus(400)
+}
