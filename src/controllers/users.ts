@@ -7,7 +7,6 @@ const insertUser = (req: Request, res: Response) => {
 		const user = req.body;
 		if (!user)
 			return badRequest(res, "Id invalid");
-
 		if (!user.email)
 			return badRequest(res, 'Invalid email');
 		if (!user.password)

@@ -35,9 +35,13 @@ const insertUser = async (user: User) => {
 const updateUser = async (user: User) => {
 	const saltRounds = 5;
 	bcrypt.hash(user.password, saltRounds, async (err, hash) => {
-		await dbQuery(`UPDATE user SET email = ?, password = ? WHERE id = ?`, [user.email, hash, user.id])
-		return getUser(user.id)
-	})
+		try {
+			await dbQuery(`UPDATE user SET email = ?, password = ? WHERE id = ?`, [user.email, hash, user.id])
+			return getUser(user.id)
+		} catch (err) {
+			// console.log(err)
+		}
+	});
 }
 
 const showUsers = async () => {
