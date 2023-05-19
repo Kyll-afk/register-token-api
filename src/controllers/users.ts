@@ -14,7 +14,7 @@ const insertUser = (req: Request, res: Response) => {
 	}
 	const user = req.body as User;
 	return userModel.insertUser(user)
-		.then(user => {
+		.then(() => {
 			res.json(user);
 		})
 		.catch(err => serverError(res, err));
@@ -42,7 +42,7 @@ const updateUser = async (req: Request, res: Response) => {
 
 	const user = req.body as User;
 	return userModel.updateUser(user)
-		.then(user => {
+		.then(() => {
 			res.json(user);
 		})
 		.catch(err => serverError(res, err));
