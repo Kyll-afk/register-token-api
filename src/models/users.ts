@@ -15,27 +15,24 @@ export type User = {
 
 const insertUser = async (user: User) => {
 	const saltRounds = 5;
-	bcrypt.hash(user.password, saltRounds, async (err, hash) => {
-		try {
-			await dbQuery('INSERT INTO user (email, password) VALUES(?, ?)', [user.email, hash])
-			let returned = await dbQuery(`SELECT seq AS Id FROM sqlite_sequence WHERE name = 'user'`);
-			return getUser(returned[0].Id);
-		} catch (err) {
-			console.log(err)
-		}
+	bcrypt.hash(user.password, saltRounds, async (hash) => {
+		await dbQuery(`CREATE TABLE IF NOT EXISTS user (
+					"id"	INTEGER,
+					"email"	TEXT,
+					"password"	TEXT,
+					PRIMARY KEY("id" AUTOINCREMENT)
+				);`)
+		await dbQuery('INSERT INTO user (email, password) VALUES(?, ?)', [user.email, hash])
+
 	});
 }
 
 const updateUser = async (user: User) => {
 	const saltRounds = 5;
-	bcrypt.hash(user.password, saltRounds, async (err, hash) => {
-		try {
-			await dbQuery(`UPDATE user SET email = ?, password = ? WHERE id = ?`, [user.email, hash, user.id])
-			return getUser(user.id)
-		} catch (err) {
-			console.log(err)
-		}
-	});
+	bcrypt.hash(user.password, saltRounds, async (hash) => {
+		await dbQuery(`UPDATE user SET email = ?, password = ? WHERE id = ?`, [user.email, hash, user.id])
+		return getUser(user.id)
+	})
 }
 
 const showUsers = async () => {

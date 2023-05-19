@@ -3,7 +3,6 @@ import { badRequest, notFound, serverError, validateNumber } from "../services/u
 import { User, userModel } from "../models/users";
 
 const insertUser = (req: Request, res: Response) => {
-
 	{
 		const user = req.body;
 		if (!user)

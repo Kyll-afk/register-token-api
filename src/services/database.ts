@@ -5,7 +5,11 @@ if (!DATABASE_FILE)
 	throw new Error("DATABASE NOT FOUND")
 
 export const connect = () => {
-	let db = new sqlite3.Database(DATABASE_FILE)
+	let db = new sqlite3.Database(DATABASE_FILE,
+		sqlite3.OPEN_READWRITE | sqlite3.OPEN_CREATE,
+		(err) => {
+			console.log(err)
+		});
 	return db;
 }
 
