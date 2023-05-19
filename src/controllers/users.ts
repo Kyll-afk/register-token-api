@@ -10,6 +10,8 @@ const insertUser = (req: Request, res: Response) => {
 
 		if (!user.email)
 			return badRequest(res, 'Invalid email');
+		if (!user.password)
+			return badRequest(res, 'Invalid password');
 	}
 	const user = req.body as User;
 	return userModel.insertUser(user)
